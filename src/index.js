@@ -122,7 +122,22 @@ function getColoredStringData (stringName="") {
       }
     } else if (functionalDescriptors.indexOf(char[1]) !== -1 && char[0] === DESCRIPTOR_PREFIX) {
       // Update descriptor
-      switch (char[1]) {
+      
+      if (lastCode.value) {
+        resultsCodes.push({
+          value: '',
+          color: getColorName(char),
+          isObfuscate,
+          isUnderline,
+          isLineThrough,
+          isItalic,
+          isBold
+        });
+        
+        lastCode = resultsCodes[resultsCodes.length - 1];
+      }
+
+      switch (char[1]) { 
         case 'l':
           isBold = true;
           break;
