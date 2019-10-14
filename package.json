@@ -1,0 +1,19 @@
+{
+  "name": "minecraft-codes",
+  "version": "0.0.1",
+  "description": "This library can help you convert colored messages (strings) from minecraft to javascript described objects",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "minecraft",
+    "colors",
+    "tags",
+    "codes",
+    "ranslate",
+    "convert"
+  ],
+  "author": "ciricc",
+  "license": "MIT"
+}
