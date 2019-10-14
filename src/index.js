@@ -136,7 +136,6 @@ function getColoredStringData (stringName="") {
           isItalic = true;
           break;
         case 'k':
-            console.log(char, 'func')
           isObfuscate = true;
           break;
       }
@@ -153,7 +152,6 @@ function getColoredStringData (stringName="") {
       resultsCodes[resultsCodes.length - 1] = lastCode;
 
       if (char === RESET_DESCRIPTOR) {
-        console.log("clear")
         isObfuscate = false;
         isUnderline = false;
         isLineThrough = false;

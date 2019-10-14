@@ -35,6 +35,36 @@ getColoredStringData("&aLast&bCraft").forEach(word => {
 
 ```javascript
 getColoredStringData("&c&k| &l&r&aLast&eCraft")
+/*
+[ { value: '| ',
+    isObfuscate: true,
+    isUnderline: false,
+    isLineThrough: false,
+    isItalic: false,
+    isBold: false,
+    color: 'scarlet' },
+  { value: '',
+    isObfuscate: false,
+    isUnderline: false,
+    isLineThrough: false,
+    isItalic: false,
+    isBold: true,
+    color: 'alpha' },
+  { value: 'Last',
+    color: 'light-green',
+    isObfuscate: false,
+    isUnderline: false,
+    isLineThrough: false,
+    isItalic: false,
+    isBold: true },
+  { value: 'Craft',
+    color: 'yellow',
+    isObfuscate: false,
+    isUnderline: false,
+    isLineThrough: false,
+    isItalic: false,
+    isBold: true } ]
+*/
 ```
 
 ### getGolorName
