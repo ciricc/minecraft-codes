@@ -146,7 +146,8 @@ function getColoredStringData (stringName="") {
         isUnderline,
         isLineThrough,
         isItalic,
-        isObfuscate
+        isObfuscate,
+        isBold
       }
 
       resultsCodes[resultsCodes.length - 1] = lastCode;
