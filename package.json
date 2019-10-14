@@ -1,6 +1,6 @@
 {
   "name": "minecraft-codes",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "This library can help you convert colored messages (strings) from minecraft to javascript described objects",
   "main": "src/index.js",
   "scripts": {
