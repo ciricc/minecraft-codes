@@ -1,6 +1,18 @@
-### Minecraft color codes string to objects
+# Minecraft color codes string to objects
 
 If you wanted once to convert colored server name or some other minecraft colored string in JavaScript, you may be met failure. This library can help you create objects from colored strings to data objects, which you can use for render this colored strings!
+
+### Installation
+
+```shell
+npm i minecraft-codes
+```
+
+Or
+
+```shell
+yarn add minecraft-codes
+```
 
 #### Simple Example
 
