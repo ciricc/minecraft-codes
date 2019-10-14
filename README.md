@@ -19,35 +19,22 @@ yarn add minecraft-codes
 This is how u can use this library
 
 ```javascript
-const {getColoredStringData} = require('minecraft-codes');
 
-/*
-  Reurns
-  {
-    childs: [],
-    isObfuscate: false,
-    color: "&a",
-    colorName: "light-green",
-    value: ""
-  }
-*/
-getColoredStringData("&a") 
+const {getColoredStringData, getColorTag, getColorName} = require('minecraft-codes');
+
+getColoredStringData("&aLast&bCraft").forEach(word => {
+  console.log(word.color) // light-green and water
+  console.log(getColorTag(word.color)) //&a and &b
+  console.log(word.color === getColorName(getColorTag(word.color))) // true true
+  console.log(word.value) // "Last" and "Craft"
+})
+
 ```
 
-### What is this happens?
-
-For render this string you need use only `childs` property. Example:
+#### And more
 
 ```javascript
-let serverName = "";
-
-getColoredStringData("&aLast&bCraft").forEach((descriptor) => {
-  descriptor.childs.forEach(child => {
-    serverName += child.value
-  });
-});
-
-console.log(serverName) // LastCraft
+getColoredStringData("&c&k| &l&r&aLast&eCraft")
 ```
 
 ### getGolorName
@@ -64,6 +51,16 @@ console.log(getColorName("&r")); // reset
 console.log(getColorName("&k")); // alpha
 
 ```
+
+### Word properties
+
+- <b>isObfuscate</b> - need or not enable obfuscation animation
+- <b>isBold</b> - need render this string as a <b>bold</b> (larget weight font)
+- <b>isItalic</b> - need or not render this string as an <i>italic</i>
+- <b>isUnderline</b> - need or not render this string as an <u>underline</u>
+- <b>isLineThrough</b> - need or not render this string as an <strike>line trough</strike>
+- <b>color</b> - color name, may be: `black, blue, green, emerald, red, purple, orange, gray, space-gray, water, light-green, diamond, scarlet, pink, yellow, white`
+- <b>value</b> - value string for this step rendering
 
 ### Usage
 

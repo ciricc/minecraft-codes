@@ -53,6 +53,20 @@ function getColorName (colorTag="") {
   }
 }
 
+/**
+ * Returns color tag with prefix, or empty string of not have this name
+ * @param {*} colorName color name from color property
+ */
+function getColorTag (colorName="") {
+  if (colorsNames.indexOf(colorName) !== -1) {
+    return DESCRIPTOR_PREFIX +  colors[colorsNames.indexOf(colorName)]
+  } else if (colorName === "reset") {
+    return RESET_DESCRIPTOR;
+  } else {
+    return "";
+  }
+}
+
 
 /**
  * Returns colored string object information, Where child - is a functionsl descriptorts and full body of a string 
@@ -61,102 +75,121 @@ function getColorName (colorTag="") {
 function getColoredStringData (stringName="") {
 
   let chars = [];
+  let isObfuscate = false;
+  let isColored = "alpha";
+  let isBold = false;
+  let isItalic = false;
+  let isUnderline = false;
+  let isLineThrough = false;
+
   let resultsCodes = [];
+  chars = getDescriptors(stringName, [...colors, ...functionalDescriptors]);
+  
+  
 
+  chars.forEach(char => {
+    let lastCode = resultsCodes[resultsCodes.length - 1];
 
-  chars = getDescriptors(stringName, colors);
-  chars.forEach(chars => {
-    if (chars[0] === DESCRIPTOR_PREFIX && colors.indexOf(chars[1]) !== -1) {
+    if (!lastCode) {
       resultsCodes.push({
         value: '',
-        color: chars,
-        colorName: getColorName(chars[1]),
-        childs: [],
-        isObfuscate: false
+        isObfuscate,
+        isUnderline,
+        isLineThrough,
+        isItalic,
+        isBold,
+        color: null
       });
-    } else {
-      let resultCode = resultsCodes[resultsCodes.length - 1];
-      if (!resultCode) {
+
+      lastCode = resultsCodes[resultsCodes.length - 1];
+    }
+
+    if (colors.indexOf(char[1]) !== -1 && char[0] === DESCRIPTOR_PREFIX) { // Update color
+      if (lastCode.color && lastCode.color !== getColorName(char)) {
+        // Setting up new code
         resultsCodes.push({
           value: '',
-          color: '',
-          colorName: getColorName(''),
-          childs: [],
-          isObfuscate: false
+          color: getColorName(char),
+          isObfuscate,
+          isUnderline,
+          isLineThrough,
+          isItalic,
+          isBold
         });
-        resultCode = resultsCodes[resultsCodes.length - 1];
+      } else {
+        lastCode.color = getColorName(char);
+        resultsCodes[resultsCodes.length - 1] = lastCode;
+      }
+    } else if (functionalDescriptors.indexOf(char[1]) !== -1 && char[0] === DESCRIPTOR_PREFIX) {
+      // Update descriptor
+      switch (char[1]) {
+        case 'l':
+          isBold = true;
+          break;
+        case 'm':
+          isLineThrough = true;
+          break;
+        case 'n':
+          isUnderline = true;
+          break;
+        case 'o':
+          isItalic = true;
+          break;
+        case 'k':
+            console.log(char, 'func')
+          isObfuscate = true;
+          break;
+      }
+      
+      lastCode = {
+        ...lastCode,
+        isObfuscate,
+        isUnderline,
+        isLineThrough,
+        isItalic,
+        isObfuscate
       }
 
-      let childs = [];
+      resultsCodes[resultsCodes.length - 1] = lastCode;
 
-      resultCode.value = chars;
-      chars = getDescriptors(chars, functionalDescriptors);
-
-      for (let i = 0; i < chars.length; i++) {
-        let char = chars[i];
-        if (char[0] === DESCRIPTOR_PREFIX & functionalDescriptors.indexOf(char[1]) !== -1) {
-          // is a functional descriptor, check "&r" (reset descriptor)
-          let child = childs[childs.length - 1];
-          if (child && !child.isCompiled) {
-            if (char === RESET_DESCRIPTOR) {
-              child.classes = []
-              child.isObfuscate = false;
-            } else if (char === OBFUSCATE_DESCRIPTOR) {
-              child.isObfuscate = true;
-            } else {
-              child.classes.push(descriptorsClasses[functionalDescriptors.indexOf(char[1])]);
-            }
-          } else {
-            let classes = [];
-            let isObfuscate = false;
-            
-            if (char === OBFUSCATE_DESCRIPTOR) {
-              isObfuscate = true;
-            } else if (char !== RESET_DESCRIPTOR) {
-              classes = [descriptorsClasses[functionalDescriptors.indexOf(char[1])]];
-            }
-
-            childs.push({
-              color: char === RESET_DESCRIPTOR ? RESET_DESCRIPTOR : resultCode.color,
-              colorName: char === RESET_DESCRIPTOR ? getColorName(RESET_DESCRIPTOR) : resultCode.colorName,
-              classes: [...classes],
-              isObfuscate: isObfuscate,
-              isCompiled: false
-            });
-
-          }
-        } else {
-          // Is a value, checking that is not a begin of string
-          if (i === 0) {
-            childs.push({
-              color: resultCode.color,
-              colorName: resultCode.colorName,
-              classes: [],
-              isObfuscate: false,
-              value: char,
-              isCompiled: true
-            });
-          } else {
-            childs[childs.length - 1].value = char;
-            childs[childs.length - 1].isCompiled = true;
-          }
-        }
+      if (char === RESET_DESCRIPTOR) {
+        console.log("clear")
+        isObfuscate = false;
+        isUnderline = false;
+        isLineThrough = false;
+        isItalic = false;
+        isObfuscate = false;
+        isColored = "alpha";
+        
+        resultsCodes.push({
+          value: '',
+          isObfuscate,
+          isUnderline,
+          isLineThrough,
+          isItalic,
+          isBold,
+          color: getColorName(isColored)
+        });
       }
 
-      resultCode.childs = childs;
+    } else {
+      // Update value
+      lastCode.value += char;
+      resultsCodes[resultsCodes.length - 1] = lastCode;
     }
-  });
+  })
+
 
   return resultsCodes;
 }
 
+module.exports.getColorTag = getColorTag;
+module.exports.getColorName = getColorName;
+module.exports.getColoredStringData = getColoredStringData;
+module.exports.getDescriptors = getDescriptors;
 
 
-exports.getColorName = getColorName;
-exports.getColoredStringData = getColoredStringData;
-exports.getDescriptors = getDescriptors;
-
-exports.functionalDescriptors = functionalDescriptors;
+module.exports.functionalDescriptors = functionalDescriptors;
 exports.descriptorsClasses = descriptorsClasses;
 exports.colors = colors;
 
