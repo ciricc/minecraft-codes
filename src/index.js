@@ -157,6 +157,7 @@ function getColoredStringData (stringName="") {
         isLineThrough = false;
         isItalic = false;
         isObfuscate = false;
+        isBold = false;
         isColored = "alpha";
         
         resultsCodes.push({

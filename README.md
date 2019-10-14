@@ -48,7 +48,7 @@ getColoredStringData("&c&k| &l&r&aLast&eCraft")
     isUnderline: false,
     isLineThrough: false,
     isItalic: false,
-    isBold: true,
+    isBold: false,
     color: 'alpha' },
   { value: 'Last',
     color: 'light-green',
@@ -56,14 +56,14 @@ getColoredStringData("&c&k| &l&r&aLast&eCraft")
     isUnderline: false,
     isLineThrough: false,
     isItalic: false,
-    isBold: true },
+    isBold: false },
   { value: 'Craft',
     color: 'yellow',
     isObfuscate: false,
     isUnderline: false,
     isLineThrough: false,
     isItalic: false,
-    isBold: true } ]
+    isBold: false } ]
 */
 ```
 
