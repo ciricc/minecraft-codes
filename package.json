@@ -1,6 +1,6 @@
 {
   "name": "minecraft-codes",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "This library can help you convert colored messages (strings) from minecraft to javascript described objects",
   "main": "src/index.js",
   "scripts": {
@@ -15,5 +15,9 @@
     "convert"
   ],
   "author": "ciricc",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ciricc/minecraft-codes.git"
+  }
 }
